@@ -112,3 +112,7 @@ jobs:
         cd src/shippingservice/
         docker build -t $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/shippingservice:v1 .
         docker push $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/shippingservice:v1
+
+    - name: Helm install
+      run: helm install boutique ./boutique
+      working-directory: chart/
