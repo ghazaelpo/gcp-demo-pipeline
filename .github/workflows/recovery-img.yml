@@ -51,64 +51,64 @@ jobs:
       run: |
         cd src/adservice/
         docker build -t $REPOSITORY/adservice:v1 .
-        docker push $REPOSITORY/adservice:v1
+        docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/adservice:v1"
 
     - name: Building Cart Service
       run: |
         cd src/cartservice/src/
         docker build -t $REPOSITORY/cartservice:v1 .
-        docker push $REPOSITORY/cartservice:v1
+        docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/cartservice:v1
 
     - name: Building Checkout Service
       run: |
         cd src/checkoutservice/
         docker build -t $REPOSITORY/checkoutservice:v1 .
-        docker push $REPOSITORY/checkoutservice:v1
+        docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/checkoutservice:v1
 
     - name: Building Currency Service
       run: |
         cd src/currencyservice/
         docker build -t $REPOSITORY/currencyservice:v1 .
-        docker push $REPOSITORY/currencyservice:v1
+        docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/currencyservice:v1
 
     - name: Building Email Service
       run: |
         cd src/emailservice/
         docker build -t $REPOSITORY/emailservice:v1 .
-        docker push $REPOSITORY/emailservice:v1
+        docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/emailservice:v1
 
     - name: Building Front-End
       run: |
         cd src/frontend/
         docker build -t $REPOSITORY/frontend:v1 .
-        docker push $REPOSITORY/frontend:v1
+        docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/frontend:v1
 
     - name: Building Load Generator
       run: |
         cd src/loadgenerator/
         docker build -t $REPOSITORY/loadgenerator:v1 .
-        docker push $REPOSITORY/loadgenerator:v1
+        docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/loadgenerator:v1
 
     - name: Building Payment Service
       run: |
         cd src/paymentservice/
         docker build -t $REPOSITORY/paymentservice:v1 .
-        docker push $REPOSITORY/paymentservice:v1
+        docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/paymentservice:v1
 
     - name: Building Product Catalog Service
       run: |
         cd src/productcatalogservice/
         docker build -t $REPOSITORY/productcatalogservice:v1 .
-        docker push $REPOSITORY/productcatalogservice:v1
+        docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/productcatalogservice:v1
 
     - name: Building Recommendation service
       run: |
         cd src/recommendationservice/
         docker build -t $REPOSITORY/recommendationservice:v1 .
-        docker push $REPOSITORY/recommendationservice:v1
+        docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/recommendationservice:v1
 
     - name: Building Shipping Service
       run: |
         cd src/shippingservice/
         docker build -t $REPOSITORY/shippingservice:v1 .
-        docker push $REPOSITORY/shippingservice:v1
+        docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/shippingservice:v1
