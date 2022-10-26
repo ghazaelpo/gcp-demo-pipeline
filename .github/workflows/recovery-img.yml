@@ -1,11 +1,8 @@
 name: Disaster recovery integration
 on:
-  workflow_dispatch:
-    inputs:
-      name:
-        description: 'Reason'
-        required: true
-        default: 'Disaster recovery'
+  push:
+    branches:
+    - main
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
