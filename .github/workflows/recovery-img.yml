@@ -1,0 +1,117 @@
+name: Disaster recovery integration
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Reason'
+        required: true
+        default: 'Disaster recovery'
+
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  GAR_LOCATION: us-central1 # # TODO: update region of the Artifact Registry
+  GKE_CLUSTER: gcp-demo-pipeline    # TODO: update to cluster name
+  GKE_ZONE: us-central1   # TODO: update to cluster zone
+  DEPLOYMENT_NAME: gke-test # TODO: update deployment name if changed in deployment.yaml or service.yml
+  REPOSITORY: gcp-demo-pipeline # TODO: update to Artifact Registry docker repository
+  IMAGE: static-site
+        
+jobs:
+  Integration:
+    runs-on: ubuntu-latest
+    
+    # Add "id-token" with the intended permissions.
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    # Alternative option - authentication via credentials json
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v0'
+      with:
+        credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+    # Setup gcloud CLI
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v0
+
+    # Configure Docker to use the gcloud command-line tool as a credential
+    # helper for authentication (https://cloud.google.com/artifact-registry/docs/docker/authentication)
+    - name: Docker configuration
+      run: |-
+        gcloud --quiet auth configure-docker $GAR_LOCATION-docker.pkg.dev
+
+    # Get the GKE credentials so we can deploy to the cluster
+    - name: Set up GKE credentials
+      run: |-
+        gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
+
+    - name: Building Ad Service 
+      run: |
+        cd src/adservice/
+        docker build -t $REPOSITORY/adservice:v1 .
+        docker push $REPOSITORY/adservice:v1
+
+    - name: Building Cart Service
+      run: |
+        cd src/cartservice/src/
+        docker build -t $REPOSITORY/cartservice:v1 .
+        docker push $REPOSITORY/cartservice:v1
+
+    - name: Building Checkout Service
+      run: |
+        cd src/checkoutservice/
+        docker build -t $REPOSITORY/checkoutservice:v1 .
+        docker push $REPOSITORY/checkoutservice:v1
+
+    - name: Building Currency Service
+      run: |
+        cd src/currencyservice/
+        docker build -t $REPOSITORY/currencyservice:v1 .
+        docker push $REPOSITORY/currencyservice:v1
+
+    - name: Building Email Service
+      run: |
+        cd src/emailservice/
+        docker build -t $REPOSITORY/emailservice:v1 .
+        docker push $REPOSITORY/emailservice:v1
+
+    - name: Building Front-End
+      run: |
+        cd src/frontend/
+        docker build -t $REPOSITORY/frontend:v1 .
+        docker push $REPOSITORY/frontend:v1
+
+    - name: Building Load Generator
+      run: |
+        cd src/loadgenerator/
+        docker build -t $REPOSITORY/loadgenerator:v1 .
+        docker push $REPOSITORY/loadgenerator:v1
+
+    - name: Building Payment Service
+      run: |
+        cd src/paymentservice/
+        docker build -t $REPOSITORY/paymentservice:v1 .
+        docker push $REPOSITORY/paymentservice:v1
+
+    - name: Building Product Catalog Service
+      run: |
+        cd src/productcatalogservice/
+        docker build -t $REPOSITORY/productcatalogservice:v1 .
+        docker push $REPOSITORY/productcatalogservice:v1
+
+    - name: Building Recommendation service
+      run: |
+        cd src/recommendationservice/
+        docker build -t $REPOSITORY/recommendationservice:v1 .
+        docker push $REPOSITORY/recommendationservice:v1
+
+    - name: Building Shipping Service
+      run: |
+        cd src/shippingservice/
+        docker build -t $REPOSITORY/shippingservice:v1 .
+        docker push $REPOSITORY/shippingservice:v1

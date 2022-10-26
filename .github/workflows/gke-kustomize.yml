@@ -64,7 +64,7 @@ jobs:
         gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
 
     # Build the Docker image
-    - name: Build
+    - name: Build test 
       run: |-
         docker build \
           --tag "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA" \
